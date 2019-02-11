@@ -49,4 +49,16 @@ do
     max
     average
   done
+  
+#error message/print output
+  if [ $count -eq 0 ]
+  then
+    echo "Cannot find this town in the current records"
+  else
+    echo The average population is $average
+    echo The minimum population is $min
+    echo The maximum population is $max
+  fi
+done
+
            
