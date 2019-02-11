@@ -1,0 +1,52 @@
+#!/bin/bash
+
+#check that index file exists
+if [ ! -e 'townFileIndex' ]
+then
+createTownIndex
+fi
+
+#calculation functions
+function average(){
+count=$[ $count + 1 ]
+total=$[ $pop + $total ]
+average=$[ $total/$count ]
+}
+
+function max(){
+if [ $pop -gt $max ]
+then max=$pop
+fi
+}
+
+function min(){
+if [ $pop -lt $min ]
+then min=$pop
+fi
+}
+
+#error messages
+if [ $# -eq 0 ]
+then
+echo "No arguments provided"
+exit 1
+fi
+
+for town in $*
+do
+  #reset to default
+  count=0
+  max=0
+  min=999999999
+  total=0
+
+  echo $town:
+  for x in $(grep $town townFileIndex)
+  do
+    path=$(echo $x | cut -d":" -f2)
+    pop=$(tail -1 $path)
+    min
+    max
+    average
+  done
+           
