@@ -1,0 +1,14 @@
+
+
+for x in $(find . -name "ff*" )
+do
+ filedate=$(head -1 $x)
+ pathdate=$( echo $x | cut -d"/" -f2-4 | tr "/" "-" )
+
+if [ $filedate != $pathdate ]
+then
+  echo $pathdate > temp
+  tail -3 $x >> temp
+  mv temp $x
+fi
+done
