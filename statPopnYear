@@ -1,0 +1,88 @@
+#!/bin/bash
+
+
+max=0
+min=999999999
+count=0
+total=0
+
+function average(){
+count=$[ $count + 1 ]
+total=$[ $total + $fig ]
+average=$[ $total/$count ]
+}
+
+function max(){
+if [ $fig -gt $max ]
+then max=$fig
+fi
+}
+
+function min(){
+if [ $fig -lt $min ]
+then min=$fig
+fi
+}
+
+function reset(){
+min=999999999
+max=0
+count=0
+total=0
+average=0
+}
+
+#error messages
+if [ $# -ne 2 ]
+then
+ echo "The number of arguments supplied is not two"
+ exit 1
+fi
+
+if [ ! -d $1 ]
+then
+  echo "The year number does not correspond to one available in the tree"
+  exit 1
+fi
+
+#calculation in loop
+for x in $(find . -name "ff*")
+do
+  pathyear=$(echo $x | cut -d"/" -f2)
+  if [ $pathyear -eq $1 ]
+  then
+    fig=$(tail -1 $x)
+    average $fig
+    max $fig
+    min $fig
+  fi
+done
+
+case $2 in
+'average')
+  echo The average population for the year $1 was $average
+  reset ;;
+
+
+'maximum')
+  echo The maximum population for the year $1 was $max
+  reset ;;
+
+
+'minimum')
+  echo The minimum population for the year $1 was $min
+  reset ;;
+
+'all')
+  echo For year $1
+  echo average was $average
+  echo minimum was $min
+  echo maximum was $max
+  reset ;;
+
+
+*)
+  echo The keyword is not one of those listed
+  reset ;;
+
+esac
