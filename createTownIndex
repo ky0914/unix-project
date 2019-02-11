@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for x in $(find . -name "ff*")
+do
+  town=$(head -3 $x | tail -1)
+  path=$(echo $x)
+
+  echo $town:$path >> townFileIndex
+done
+
+sort townFileIndex >> townFileIndex
+
