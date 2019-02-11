@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#error messages
+if [ $# -eq 0 ]
+then
+echo "No arguments provided"
+exit 1
+fi
+
+for town in $*
+do
+  count=0
+  echo $town:
+  for x in $(grep $town townFileIndex)
+  do
+    path=$(echo $x | cut -d":" -f2)
+    date=$(echo $x | cut -d"/" -f2-4 | tr "/" "-")
+    pop=$(tail -1 $path)
+    echo $date:$pop
+    count=$[ count+1 ]
+done
+#error message
+if [ $count -eq 0 ]
+then
+  echo "Cannot find this town in the current records"
+fi
+done
